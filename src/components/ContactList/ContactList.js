@@ -1,11 +1,20 @@
 import ContactItem from './ContactItem';
-import PropTypes from 'prop-types';
+
+import { useSelector } from 'react-redux';
+import { getContactsTotal, getContactsFiltered } from '../../redux/contacts/contact-selectors';
 
 import styles from './ContactList.module.css';
 
-const ContactList = ({ contacts, onDeleteCont }) => (
+
+
+const ContactList = () => {
+
+  
+  const contacts = useSelector(getContactsFiltered);
+  
+  return (
   <div>
-    <p className={styles.title}>Contact list</p>
+    <p className={styles.title}>Contact list. <span style={{color:'white', fontSize:'16px'}}>Total contacts {useSelector(getContactsTotal)}</span> :</p>
     <ul>
       {contacts.map(({ name, number, id }) => {
         return (
@@ -14,22 +23,14 @@ const ContactList = ({ contacts, onDeleteCont }) => (
             id={id}
             name={name}
             number={number}
-            onDeleteContact={onDeleteCont}
           />
         );
       })}
     </ul>
   </div>
-);
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.any.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ),
+)
 };
+
+
 
 export default ContactList;

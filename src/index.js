@@ -1,14 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import store from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+
+
+
+//console.log('store', store);
 
 ReactDOM.render(
+  
   <React.StrictMode>
-    <App />
+    <Provider store={store.store}>
+      <PersistGate loading={<h2>Data upload from LocalStorage...</h2>} persistor={store.persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
+  
 );
 
 // If you want to start measuring performance in your app, pass a function
